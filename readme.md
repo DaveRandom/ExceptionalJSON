@@ -9,7 +9,7 @@ Thin wrapper around PHP's `json_encode()` and `json_decode()` functions, which t
 **Installation**
 
 ```bash
-$ composer require amphp/amp
+$ composer require daverandom/exceptional-json
 ```
 
 **Usage**
