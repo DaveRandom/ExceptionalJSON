@@ -13,7 +13,7 @@ class EncodeErrorException extends Exception
 
     public function __construct(int $code, string $message, $value)
     {
-        parent::__construct($message, $code);
+        parent::__construct($code, $message);
         $this->value = $value;
     }
 
