@@ -48,9 +48,6 @@ namespace ExceptionalJSON
 
 namespace
 {
-    use function ExceptionalJSON\decode;
-    use function ExceptionalJSON\encode;
-
     if (!function_exists('json_try_decode')) {
         /**
          * Decodes a JSON string.
@@ -64,7 +61,7 @@ namespace
          */
         function json_try_decode(string $json, bool $assoc = false, int $depth = 512, int $options = 0)
         {
-            return decode($json, $assoc, $depth, $options);
+            return \ExceptionalJSON\decode($json, $assoc, $depth, $options);
         }
     }
 
@@ -80,7 +77,7 @@ namespace
          */
         function json_try_encode($value, int $options = 0, int $depth = 512)
         {
-            return encode($value, $options, $depth);
+            return \ExceptionalJSON\encode($value, $options, $depth);
         }
     }
 }
