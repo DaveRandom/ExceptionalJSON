@@ -17,7 +17,10 @@ class EncodeErrorException extends Exception
         $this->value = $value;
     }
 
-    public function getValue(): string
+    /**
+     * @return mixed
+     */
+    public function getValue()
     {
         return $this->value;
     }
