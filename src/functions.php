@@ -16,7 +16,7 @@ if (!\function_exists('json_try_decode')) {
      * @return mixed The value encoded in JSON in appropriate PHP type.
      * @throws \ExceptionalJSON\DecodeErrorException When the decode operation fails.
      */
-    function json_try_decode(string $json, bool $assoc = false, int $depth = 512, int $options = 0)
+    function json_try_decode(string $json, bool $assoc = null, int $depth = 512, int $options = 0)
     {
         return \ExceptionalJSON\decode($json, $assoc, $depth, $options);
     }

@@ -12,7 +12,7 @@ namespace ExceptionalJSON;
  * @return mixed The value encoded in JSON in appropriate PHP type.
  * @throws DecodeErrorException When the decode operation fails.
  */
-function decode(string $json, bool $assoc = false, int $depth = 512, int $options = 0)
+function decode(string $json, bool $assoc = null, int $depth = 512, int $options = 0)
 {
     try {
         return \json_decode($json, $assoc, $depth, $options | \JSON_THROW_ON_ERROR);
