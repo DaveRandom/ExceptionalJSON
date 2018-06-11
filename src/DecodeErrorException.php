@@ -11,7 +11,7 @@ class DecodeErrorException extends Exception
 {
     private $json;
 
-    public function __construct(int $code, string $message, string $json)
+    public function __construct(int $code, string $message, string $json, \Throwable $e = null)
     {
         parent::__construct($code, $message);
         $this->json = $json;
