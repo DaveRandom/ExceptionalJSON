@@ -33,7 +33,7 @@ namespace ExceptionalJSON
      * @return string JSON encoded string.
      * @throws Exception When the encode operation fails
      */
-    function encode($value, int $options = 0, int $depth = 512)
+    function encode($value, int $options = 0, int $depth = 512): string
     {
         $result = \json_encode($value, $options, $depth);
         $code = \json_last_error();
@@ -75,7 +75,7 @@ namespace
          * @return string JSON encoded string.
          * @throws \ExceptionalJSON\EncodeErrorException When the encode operation fails
          */
-        function json_try_encode($value, int $options = 0, int $depth = 512)
+        function json_try_encode($value, int $options = 0, int $depth = 512): string
         {
             return \ExceptionalJSON\encode($value, $options, $depth);
         }
