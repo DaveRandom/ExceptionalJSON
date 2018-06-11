@@ -7,5 +7,8 @@
   "autoload": {
     "psr-4": {"ExceptionalJSON\\": "src/"},
     "files": ["src/functions.php"]
+  },
+  "require": {
+    "php": ">=7.0"
   }
 }
