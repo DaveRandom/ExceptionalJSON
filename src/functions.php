@@ -48,7 +48,7 @@ namespace ExceptionalJSON
 
 namespace
 {
-    if (!function_exists('json_try_decode')) {
+    if (!\function_exists('json_try_decode')) {
         /**
          * Decodes a JSON string.
          *
@@ -65,7 +65,7 @@ namespace
         }
     }
 
-    if (!function_exists('json_try_encode')) {
+    if (!\function_exists('json_try_encode')) {
         /**
          * Returns the JSON representation of a value.
          *
