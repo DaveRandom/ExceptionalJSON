@@ -35,7 +35,7 @@ function decode(string $json, bool $assoc = false, int $depth = 512, int $option
  */
 function encode($value, int $options = 0, int $depth = 512): string
 {
-    $result = \json_encode($value, $options, $depth);
+    $result = \json_encode($value, $options & ~\JSON_PARTIAL_OUTPUT_ON_ERROR, $depth);
     $code = \json_last_error();
 
     if ($code !== \JSON_ERROR_NONE) {
