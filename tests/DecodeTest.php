@@ -31,6 +31,10 @@ final class DecodeTest extends \PHPUnit\Framework\TestCase
 
     public function testDecodeValidJsonAssocFlag()
     {
+        if (!\ExceptionalJSON\HAVE_JSON_OBJECT_AS_ARRAY_FLAG) {
+            $this->markTestSkipped('JSON_OBJECT_AS_ARRAY flag not implemented in this version');
+        }
+
         $this->assertSame(
             self::DECODED,
             \ExceptionalJSON\decode(self::VALID_ENCODED, null, 512, \JSON_OBJECT_AS_ARRAY)
@@ -53,7 +57,7 @@ final class DecodeTest extends \PHPUnit\Framework\TestCase
     public function testDecodeValidJsonInvalidDepth()
     {
         try {
-            \ExceptionalJSON\decode(self::VALID_ENCODED, null, 2);
+            \ExceptionalJSON\decode(self::VALID_ENCODED, false, 2);
         } catch (\ExceptionalJSON\DecodeErrorException $e) {
             $this->assertSame(\JSON_ERROR_DEPTH, $e->getCode());
         }
