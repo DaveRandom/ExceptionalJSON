@@ -12,7 +12,12 @@ namespace ExceptionalJSON;
  * @return mixed The value encoded in JSON in appropriate PHP type.
  * @throws DecodeErrorException When the decode operation fails.
  */
-function decode(string $json, bool $assoc = null, int $depth = 512, int $options = 0)
+function decode(
+    string $json,
+    bool $assoc = \ExceptionalJSON\DECODE_ASSOC_ARG_DEFAULT,
+    int $depth = \ExceptionalJSON\DECODE_DEPTH_ARG_DEFAULT,
+    int $options = \ExceptionalJSON\DECODE_OPTIONS_ARG_DEFAULT
+)
 {
     $result = \json_decode($json, $assoc, $depth, $options);
     $code = \json_last_error();
@@ -33,7 +38,11 @@ function decode(string $json, bool $assoc = null, int $depth = 512, int $options
  * @return string JSON encoded string.
  * @throws Exception When the encode operation fails
  */
-function encode($value, int $options = 0, int $depth = 512): string
+function encode(
+    $value,
+    int $options = \ExceptionalJSON\ENCODE_OPTIONS_ARG_DEFAULT,
+    int $depth = \ExceptionalJSON\ENCODE_DEPTH_ARG_DEFAULT
+): string
 {
     $result = \json_encode($value, $options & ~\JSON_PARTIAL_OUTPUT_ON_ERROR, $depth);
     $code = \json_last_error();

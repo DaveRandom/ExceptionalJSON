@@ -6,13 +6,18 @@ namespace ExceptionalJSON;
  * Decodes a JSON string.
  *
  * @param string $json The JSON string being decoded.
- * @param bool $assoc When TRUE, returned objects will be converted into associative arrays.
+ * @param bool|null $assoc When TRUE, returned objects will be converted into associative arrays.
  * @param int $depth User specified recursion depth.
  * @param int $options Bit mask of JSON decode options.
  * @return mixed The value encoded in JSON in appropriate PHP type.
  * @throws DecodeErrorException When the decode operation fails.
  */
-function decode(string $json, bool $assoc = null, int $depth = 512, int $options = 0)
+function decode(
+    string $json,
+    bool $assoc = \ExceptionalJSON\DECODE_ASSOC_ARG_DEFAULT,
+    int $depth = \ExceptionalJSON\DECODE_DEPTH_ARG_DEFAULT,
+    int $options = \ExceptionalJSON\DECODE_OPTIONS_ARG_DEFAULT
+)
 {
     try {
         return \json_decode($json, $assoc, $depth, $options | \JSON_THROW_ON_ERROR);
@@ -30,7 +35,11 @@ function decode(string $json, bool $assoc = null, int $depth = 512, int $options
  * @return string JSON encoded string.
  * @throws Exception When the encode operation fails
  */
-function encode($value, int $options = 0, int $depth = 512): string
+function encode(
+    $value,
+    int $options = \ExceptionalJSON\ENCODE_OPTIONS_ARG_DEFAULT,
+    int $depth = \ExceptionalJSON\ENCODE_DEPTH_ARG_DEFAULT
+): string
 {
     try {
         return \json_encode($value, ($options & ~\JSON_PARTIAL_OUTPUT_ON_ERROR) | \JSON_THROW_ON_ERROR, $depth);
