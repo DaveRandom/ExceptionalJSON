@@ -5,7 +5,10 @@ require \PHP_VERSION_ID >= 70300
     ? __DIR__ . '/functions-7.3.php'
     : __DIR__ . '/functions-7.0.php';
 
-if (!\function_exists('json_try_decode')) {
+\define('ExceptionalJSON\\HAVE_JSON_TRY_DECODE', !\function_exists('json_try_decode'));
+\define('ExceptionalJSON\\HAVE_JSON_TRY_ENCODE', !\function_exists('json_try_decode'));
+
+if (\ExceptionalJSON\HAVE_JSON_TRY_DECODE) {
     /**
      * Decodes a JSON string.
      *
@@ -22,7 +25,7 @@ if (!\function_exists('json_try_decode')) {
     }
 }
 
-if (!\function_exists('json_try_encode')) {
+if (\ExceptionalJSON\HAVE_JSON_TRY_ENCODE) {
     /**
      * Returns the JSON representation of a value.
      *
