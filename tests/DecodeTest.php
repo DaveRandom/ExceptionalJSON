@@ -1,6 +1,11 @@
 <?php declare(strict_types=1);
 
-final class DecodeTest extends \PHPUnit\Framework\TestCase
+namespace ExceptionalJSON\Tests;
+
+use ExceptionalJSON\DecodeErrorException;
+use PHPUnit\Framework\TestCase;
+
+final class DecodeTest extends TestCase
 {
     const VALID_ENCODED = '{"string":"foo bar baz","array":[1,2,3],"bigint":12345678901234567890}';
     const DECODED = ["string" => "foo bar baz", "array" => [1,2,3], "bigint" => 12345678901234567890];
@@ -58,8 +63,9 @@ final class DecodeTest extends \PHPUnit\Framework\TestCase
     {
         try {
             \ExceptionalJSON\decode(self::VALID_ENCODED, false, 2);
-        } catch (\ExceptionalJSON\DecodeErrorException $e) {
+        } catch (DecodeErrorException $e) {
             $this->assertSame(\JSON_ERROR_DEPTH, $e->getCode());
+            $this->assertSame(self::VALID_ENCODED, $e->getJSON());
         }
     }
 
@@ -67,8 +73,9 @@ final class DecodeTest extends \PHPUnit\Framework\TestCase
     {
         try {
             \ExceptionalJSON\decode('{"foo":"bar"]');
-        } catch (\ExceptionalJSON\DecodeErrorException $e) {
+        } catch (DecodeErrorException $e) {
             $this->assertSame(\JSON_ERROR_STATE_MISMATCH, $e->getCode());
+            $this->assertSame('{"foo":"bar"]', $e->getJSON());
         }
     }
 
@@ -76,8 +83,9 @@ final class DecodeTest extends \PHPUnit\Framework\TestCase
     {
         try {
             \ExceptionalJSON\decode('{"foo"' . "\x03" . ':"bar"}');
-        } catch (\ExceptionalJSON\DecodeErrorException $e) {
+        } catch (DecodeErrorException $e) {
             $this->assertSame(\JSON_ERROR_CTRL_CHAR, $e->getCode());
+            $this->assertSame('{"foo"' . "\x03" . ':"bar"}', $e->getJSON());
         }
     }
 
@@ -85,8 +93,9 @@ final class DecodeTest extends \PHPUnit\Framework\TestCase
     {
         try {
             \ExceptionalJSON\decode('{"foo" => "bar"}');
-        } catch (\ExceptionalJSON\DecodeErrorException $e) {
+        } catch (DecodeErrorException $e) {
             $this->assertSame(\JSON_ERROR_SYNTAX, $e->getCode());
+            $this->assertSame('{"foo" => "bar"}', $e->getJSON());
         }
     }
 
@@ -94,8 +103,9 @@ final class DecodeTest extends \PHPUnit\Framework\TestCase
     {
         try {
             \ExceptionalJSON\decode('{"foo' . "\x80\x80" . '":"bar"}');
-        } catch (\ExceptionalJSON\DecodeErrorException $e) {
+        } catch (DecodeErrorException $e) {
             $this->assertSame(\JSON_ERROR_UTF8, $e->getCode());
+            $this->assertSame('{"foo' . "\x80\x80" . '":"bar"}', $e->getJSON());
         }
     }
 
@@ -103,8 +113,9 @@ final class DecodeTest extends \PHPUnit\Framework\TestCase
     {
         try {
             \ExceptionalJSON\decode('{"\u0000foo":"bar"}');
-        } catch (\ExceptionalJSON\DecodeErrorException $e) {
+        } catch (DecodeErrorException $e) {
             $this->assertSame(\JSON_ERROR_INVALID_PROPERTY_NAME, $e->getCode());
+            $this->assertSame('{"\u0000foo":"bar"}', $e->getJSON());
         }
     }
 }
