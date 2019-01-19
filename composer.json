@@ -8,6 +8,9 @@
     "psr-4": {"ExceptionalJSON\\": "src/"},
     "files": ["src/functions.php"]
   },
+  "autoload-dev": {
+    "psr-4": {"ExceptionalJSON\\Tests\\": "tests/"}
+  },
   "require": {
     "php": ">=7.0"
   },
